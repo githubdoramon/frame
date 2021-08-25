@@ -8,6 +8,7 @@ const londonHardforkSigners: SignerCompatibilityByVersion = {
   seed: () => true,
   ring: () => true,
   ledger: version => version.major >= 2 || (version.major >= 1 && version.minor >= 9),
+  trezor: version => version.major >= 3 || (version.major >= 2 && version.minor >= 4 && version.patch >= 2),
   lattice: version =>  version.major >= 1 || version.minor >= 11
 }
 
@@ -87,7 +88,7 @@ function usesBaseFee (rawTx: RawTransaction) {
 
 function populate (rawTx: RawTransaction, chainConfig: Common, gas: any): TransactionData {
   const txData: TransactionData = { ...rawTx }
-  
+
   if (chainConfig.isActivatedEIP(1559)) {
     txData.type = '0x2'
 
