@@ -175,7 +175,10 @@ const initial = {
           poa: 'https://dai.poa.network'
         },
         137: {
-          matic: 'https://rpc-mainnet.maticvigil.com'
+          matic: ["wss://rpc-mainnet.matic.network","https://rpc-mainnet.matic.network"]
+        },
+        80001: {
+          matic: ["wss://matic-testnet-archive-ws.bwarelabs.com","https://matic-mumbai.chainstacklabs.com"]
         }
       }
     },
@@ -289,6 +292,40 @@ const initial = {
           symbol: 'xDAI',
           name: 'xDai',
           explorer: 'https://blockscout.com/poa/xdai',
+          gas: {
+            price: {
+              selected: 'standard',
+              levels: { slow: '', standard: '', fast: '', asap: '', custom: '' }
+            }
+          },
+          connection: {
+            primary: { on: true, current: 'poa', status: 'loading', connected: false, type: '', network: '', custom: '' },
+            secondary: { on: false, current: 'custom', status: 'loading', connected: false, type: '', network: '', custom: '' }
+          }
+        },
+        137: {
+          id: 137,
+          type: 'ethereum',
+          symbol: 'MATIC',
+          name: 'Polygon',
+          explorer: 'https://polygonscan.com',
+          gas: {
+            price: {
+              selected: 'standard',
+              levels: { slow: '', standard: '', fast: '', asap: '', custom: '' }
+            }
+          },
+          connection: {
+            primary: { on: true, current: 'poa', status: 'loading', connected: false, type: '', network: '', custom: '' },
+            secondary: { on: false, current: 'custom', status: 'loading', connected: false, type: '', network: '', custom: '' }
+          }
+        },
+        80001: {
+          id: 80001,
+          type: 'ethereum',
+          symbol: 'MATIC',
+          name: 'Mumbai',
+          explorer: 'https://mumbai.polygonscan.com',
           gas: {
             price: {
               selected: 'standard',
@@ -428,6 +465,29 @@ if (initial.main._version < 6) {
     initial.main.trezor.derivation = 'testnet'
   }
   initial.main._version = 6
+}
+
+if (initial.main._version < 7) {
+  // Do state transition
+  initial.main.networks.ethereum[80001] = {
+    id: 80001,
+    type: 'ethereum',
+    symbol: 'MATIC',
+    name: 'Mumbai',
+    explorer: 'https://mumbai.polygonscan.com',
+    gas: {
+      price: {
+        selected: 'standard',
+        levels: { slow: '', standard: '', fast: '', asap: '', custom: '' }
+      }
+    },
+    connection: {
+      primary: { on: true, current: 'poa', status: 'loading', connected: false, type: '', network: '', custom: '' },
+      secondary: { on: false, current: 'custom', status: 'loading', connected: false, type: '', network: '', custom: '' }
+    }
+  }
+
+  initial.main._version = 7
 }
 
 module.exports = () => initial
